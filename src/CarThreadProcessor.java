@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.Random;
 
 public class CarThreadProcessor extends Thread {
@@ -11,12 +12,13 @@ public class CarThreadProcessor extends Thread {
 	float traveledDistance;
 	
 	float destiny;
+	private RacePodium racePodium;
 	
 	Random random = new Random();
 	
 	
 	
-	public CarThreadProcessor(int _carID, float _initSpeed, float _minAccel, float _maxAccel, float _position, float _destiny) {
+	public CarThreadProcessor(int _carID, float _initSpeed, float _minAccel, float _maxAccel, float _position, float _destiny, RacePodium _racePodium) {
 		this.carID = _carID;
 		
 		this.initSpeed = _initSpeed;
@@ -24,6 +26,7 @@ public class CarThreadProcessor extends Thread {
 		this.maxAccel = _maxAccel;
 		this.position = _position;
 		this.destiny = _destiny;
+		this.racePodium = _racePodium;
 	}
 	
 	
@@ -33,6 +36,7 @@ public class CarThreadProcessor extends Thread {
 		
 		//o que a thread vai fazer/calcular
 		carRun(carID, initSpeed, position, destiny);
+		
 	}
 	
 	public void carRun(int _carID, float currentSpeed, float _initPosition, float _destiny) {
@@ -76,6 +80,7 @@ public class CarThreadProcessor extends Thread {
 		
 		//Carro está na linha de chegada
 		System.out.println("***	O Carro_" + _carID + " alcançou a linha de chegada em " + elapsedTime + " segundos.");
+		racePodium.addRacer(this);
 	}
 	
 	
@@ -103,6 +108,10 @@ public class CarThreadProcessor extends Thread {
 		System.out.println("accel: " + _accel);
 		System.out.println("time: " + elapsedTime);
 		System.out.println("speed: " + speed);
+	}
+	
+	public String getCarName() {
+		return "Carro_" + carID;
 	}
 	
 }

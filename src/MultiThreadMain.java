@@ -4,7 +4,7 @@ public class MultiThreadMain {
 	public static void main(String[] args) {
 		
 		//propriedades dos carros:
-		int numCars = 3;
+		int numCars = 10;
 		
 		float initSpeed = 0f; // vel. inicial de todos = 0
 		float minAccel = 5f;
@@ -12,13 +12,15 @@ public class MultiThreadMain {
 		float position = 0f; //largada no 0
 		
 		float destiny = 100f;// fim da corrida
+		RacePodium podium = new RacePodium(); //pódio de vencedores
+		
 		
 		//Criando as Threads
 		CarThreadProcessor[] carThreads = new CarThreadProcessor[numCars];
 		
 		//Inicializando os carros e colocando IDs
 		for (int i = 0; i < numCars; i++) {
-			carThreads[i] = new CarThreadProcessor(i + 1, initSpeed, minAccel, maxAccel, position, destiny);
+			carThreads[i] = new CarThreadProcessor(i + 1, initSpeed, minAccel, maxAccel, position, destiny, podium);
 		}
 		
 		// Inicia as threads dos carros
@@ -35,8 +37,9 @@ public class MultiThreadMain {
                 e.printStackTrace();
             }
         }
-		
-		//Impressão da Corrida
+        
+        //Depois da corrida terminar, podemos exibir o pódio
+        podium.printPodium();
 		
 	}
 }
